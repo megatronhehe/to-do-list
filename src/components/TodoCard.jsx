@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoTrashBin } from "react-icons/io5";
-import { TfiPencilAlt } from "react-icons/tfi";
+import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 
 const TodoCard = ({ id, todo, task, date, setTodos }) => {
+	const [toggleEdit, setToggleEdit] = useState(false);
+
+	const editTodoName = (e) => {
+		const { value } = e.target;
+		setTodos((prev) =>
+			prev.map((item) => (item.id === id ? { ...item, todo: value } : item))
+		);
+	};
 	const day = () => {
 		const weekday = [
 			"Sunday",
@@ -39,23 +47,45 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 	};
 
 	return (
-		<div className="relative bg-gray-100 text-sm p-4 rounded-lg">
-			<h3 className="text-base">{todo}</h3>
-			<p className=" text-gray-400 text-xs">5 / 7 tasks completed</p>
+		<div className="relative bg-gray-100 text-sm p-2 rounded-lg">
+			<form>
+				<input
+					disabled={!toggleEdit}
+					onChange={editTodoName}
+					className={`outline-none text-base rounded-md p-2 ${
+						toggleEdit ? "bg-white" : "bg-gray-100 "
+					}`}
+					type="text"
+					value={todo}
+				/>
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setToggleEdit(false);
+					}}
+				></button>
+			</form>
+			<p className=" text-gray-400 text-xs mt-2">5 / 7 tasks completed</p>
 			<div className="text-end mt-12 font-light tracking-wide">
 				<p>{day()}</p>
 				<p>
 					{date.getDate()} <span>{month()}</span>
 				</p>
 			</div>
+
+			{!toggleEdit && (
+				<button
+					onClick={() => deleteTodo(id)}
+					className="absolute top-1 right-1 text-xl text-red-400 bg-white p-2 rounded-md"
+				>
+					<IoTrashBin />
+				</button>
+			)}
 			<button
-				onClick={() => deleteTodo(id)}
-				className="absolute top-1 right-1 text-xl text-red-400 bg-white p-2 rounded-md"
+				onClick={() => setToggleEdit((prev) => !prev)}
+				className="absolute bottom-1 left-1 text-xl text-gray-500 bg-white p-3 rounded-md"
 			>
-				<IoTrashBin />
-			</button>
-			<button className="absolute bottom-1 left-1 text-xl text-gray-500 bg-white p-4 rounded-md">
-				<TfiPencilAlt />
+				{toggleEdit ? <TfiCheck /> : <TfiPencilAlt />}
 			</button>
 		</div>
 	);
