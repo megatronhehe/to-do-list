@@ -25,7 +25,7 @@ const TodosList = ({
 
 	return (
 		<div className="relative mt-8 p-4 rounded-xl w-full bg-white ">
-			<div className="flex justify-between items-center border-b pb-2">
+			<div className="flex justify-center items-center border-b pb-2">
 				<h2 className="text-xl tracking-wide">Select Todos</h2>
 			</div>
 
