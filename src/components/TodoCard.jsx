@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { IoTrashBin } from "react-icons/io5";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 
 const TodoCard = ({ id, todo, task, date, setTodos }) => {
 	const [toggleEdit, setToggleEdit] = useState(false);
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		if (toggleEdit) {
+			inputRef.current.focus();
+		}
+	}, [toggleEdit]);
 
 	const editTodoName = (e) => {
 		const { value } = e.target;
@@ -50,9 +57,10 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 		<div className="relative bg-gray-100 text-sm p-2 rounded-lg">
 			<form>
 				<input
+					ref={inputRef}
 					disabled={!toggleEdit}
 					onChange={editTodoName}
-					className={`outline-none text-base rounded-md p-2 ${
+					className={`outline-none text-base rounded-md w-full p-2 ${
 						toggleEdit ? "bg-white" : "bg-gray-100 "
 					}`}
 					type="text"
