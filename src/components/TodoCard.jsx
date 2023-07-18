@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { IoTrashBin } from "react-icons/io5";
-import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
+import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
 
 const TodoCard = ({ id, todo, task, date, setTodos }) => {
 	const [toggleEdit, setToggleEdit] = useState(false);
@@ -84,9 +83,9 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 			{!toggleEdit && (
 				<button
 					onClick={() => deleteTodo(id)}
-					className="absolute top-1 right-1 text-xl text-red-400 bg-white p-2 rounded-md"
+					className="absolute top-1 right-1 text-xl  bg-red-300 p-2 rounded-md text-white"
 				>
-					<IoTrashBin />
+					<TfiTrash />
 				</button>
 			)}
 			<button
