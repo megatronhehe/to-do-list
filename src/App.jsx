@@ -10,8 +10,8 @@ import { Routes, Route } from "react-router-dom";
 function App() {
 	const initial_form_state = {
 		id: "",
-		todo: "",
-		tasks: [{}],
+		title: "",
+		tasks: [],
 		isCompleted: false,
 		date: new Date(),
 	};
@@ -20,13 +20,19 @@ function App() {
 	const [todos, setTodos] = useState([]);
 	const [newTodoForm, setNewTodoForm] = useState(initial_form_state);
 
+	// functions
+	const createId = () => {
+		const id = new Date();
+		return `${id.getMilliseconds()}${id.getSeconds()}${id.getMinutes()}${id.getHours()}${id.getDate()}${id.getMonth()}${id.getFullYear()}`;
+	};
+
 	// ELEMENTS
 	const TodosCardElement = todos.map((todo) => (
 		<TodoCard
 			key={todo.id}
 			id={todo.id}
-			todo={todo.todo}
-			task={todo.task}
+			title={todo.title}
+			tasks={todo.tasks}
 			date={todo.date}
 			setTodos={setTodos}
 		/>
@@ -34,8 +40,8 @@ function App() {
 
 	return (
 		<>
-			<div className="text-gray-600  h-screen flex justify-center bg-gray-100 py-8">
-				<div className="max-w-xl w-full ">
+			<div className="flex justify-center h-screen py-8 text-gray-600 bg-gray-100">
+				<div className="w-full max-w-xl ">
 					<Header />
 					<Routes>
 						<Route
@@ -45,13 +51,23 @@ function App() {
 									newTodoForm={newTodoForm}
 									setNewTodoForm={setNewTodoForm}
 									setTodos={setTodos}
+									createId={createId}
 									initial_form_state={initial_form_state}
 								>
 									{todos.length > 0 && TodosCardElement}
 								</TodosList>
 							}
 						></Route>
-						<Route path="/:id" element={<TodoDetails todos={todos} />}></Route>
+						<Route
+							path="/:id"
+							element={
+								<TodoDetails
+									todos={todos}
+									setTodos={setTodos}
+									createId={createId}
+								/>
+							}
+						></Route>
 					</Routes>
 				</div>
 

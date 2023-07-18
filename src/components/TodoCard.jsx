@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
 
-const TodoCard = ({ id, todo, task, date, setTodos }) => {
+const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const inputRef = useRef(null);
 
@@ -15,7 +15,7 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 	const editTodoName = (e) => {
 		const { value } = e.target;
 		setTodos((prev) =>
-			prev.map((item) => (item.id === id ? { ...item, todo: value } : item))
+			prev.map((item) => (item.id === id ? { ...item, title: value } : item))
 		);
 	};
 
@@ -56,7 +56,7 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 	};
 
 	return (
-		<div className="relative bg-gray-100 text-sm p-2 rounded-lg">
+		<div className="relative p-2 text-sm bg-gray-100 rounded-lg">
 			<Link to={`/${id}`}>
 				<form>
 					<input
@@ -67,7 +67,7 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 							toggleEdit ? "bg-white" : "bg-gray-100 "
 						}`}
 						type="text"
-						value={todo}
+						value={title}
 					/>
 					<button
 						onClick={(e) => {
@@ -76,8 +76,8 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 						}}
 					></button>
 				</form>
-				<p className=" text-gray-400 text-xs mt-2">5 / 7 tasks completed</p>
-				<div className="text-end mt-12 font-light tracking-wide">
+				<p className="mt-2 text-xs text-gray-400 ">5 / 7 tasks completed</p>
+				<div className="mt-12 font-light tracking-wide text-end">
 					<p>{day()}</p>
 					<p>
 						{date.getDate()} <span>{month()}</span>
@@ -88,7 +88,7 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 			{!toggleEdit && (
 				<button
 					onClick={(e) => deleteTodo(id, e)}
-					className="absolute top-1 right-1 text-xl  bg-red-300 p-2 rounded-md text-white"
+					className="absolute p-2 text-xl text-white bg-red-300 rounded-md top-1 right-1"
 				>
 					<TfiTrash />
 				</button>
@@ -98,7 +98,7 @@ const TodoCard = ({ id, todo, task, date, setTodos }) => {
 					e.stopPropagation();
 					setToggleEdit((prev) => !prev);
 				}}
-				className="absolute bottom-1 left-1 text-xl  text-gray-500 bg-white p-3 rounded-md"
+				className="absolute p-3 text-xl text-gray-500 bg-white rounded-md bottom-1 left-1"
 			>
 				{toggleEdit ? <TfiCheck /> : <TfiPencilAlt />}
 			</button>
