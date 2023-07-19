@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import Task from "./Task";
+import ErrorPage from "./ErrorPage";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { TfiPlus, TfiPencilAlt } from "react-icons/tfi";
@@ -85,7 +86,7 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 			{thisTodo.tasks.length > 0 && tasksElement}
 		</div>
 	) : (
-		<p>doesnt exist</p>
+		<ErrorPage />
 	);
 };
 
