@@ -40,32 +40,14 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 		setTaskForm(initial_task_state);
 	};
 
-	const deleteTask = (id) => {
-		setThisTodo((prev) => ({
-			...prev,
-			tasks: prev.tasks.filter((task) => task.id !== id),
-		}));
-	};
-
-	const markTaskDone = (id) => {
-		setThisTodo((prev) => ({
-			...prev,
-			tasks: prev.tasks.map((task) =>
-				task.id === id ? { ...task, done: !task.done } : task
-			),
-		}));
-	};
-
 	const tasksElement =
 		isTodosExist &&
 		thisTodo.tasks.map((task) => (
 			<Task
 				key={task.id}
-				markTaskDone={markTaskDone}
 				id={task.id}
 				done={task.done}
 				name={task.name}
-				deleteTask={deleteTask}
 				setThisTodo={setThisTodo}
 			/>
 		));
