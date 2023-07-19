@@ -37,14 +37,14 @@ const TodoCard = ({ id, title, tasks, date, setTodos, stringifyDate }) => {
 	const { day, month } = stringifyDate(date);
 
 	return (
-		<div className="relative p-2 text-sm bg-gray-100 rounded-lg">
+		<div className="relative p-2 text-sm bg-gray-100 rounded-lg cursor-pointer">
 			<Link to={`/${id}`}>
 				<form>
 					<input
 						ref={inputRef}
 						disabled={!toggleEdit}
 						onChange={editTodoName}
-						className={`outline-none text-base rounded-md w-full p-2 ${
+						className={`cursor-pointer outline-none text-base rounded-md w-full p-2 ${
 							toggleEdit ? "bg-white" : "bg-gray-100 "
 						}`}
 						type="text"
@@ -70,7 +70,6 @@ const TodoCard = ({ id, title, tasks, date, setTodos, stringifyDate }) => {
 					<p>
 						{date.getDate()} <span>{month}</span>
 					</p>
-					<p></p>
 				</div>
 			</Link>
 

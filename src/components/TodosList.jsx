@@ -16,14 +16,16 @@ const TodosList = ({
 
 	const addNewTodo = (e) => {
 		e.preventDefault();
-		setTodos((prev) => [...prev, newTodoForm]);
+		setTodos((prev) => [newTodoForm, ...prev]);
 		setNewTodoForm(initial_todo_state);
 	};
 
 	return (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
 			<div className="flex items-center justify-center pb-2 border-b">
-				<h2 className="text-xl tracking-wide">Your Todos</h2>
+				<h2 className="text-xl tracking-wide border border-white">
+					Your Todos
+				</h2>
 			</div>
 
 			<div className="flex items-center gap-1 mt-4">

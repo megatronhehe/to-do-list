@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import Task from "./Task";
 import ErrorPage from "./ErrorPage";
 
-import { IoIosArrowBack, IoIosListBox, IoIosCalendar } from "react-icons/io";
-import { TfiPlus } from "react-icons/tfi";
+import {
+	IoIosArrowBack,
+	IoIosListBox,
+	IoIosCalendar,
+	IoIosList,
+} from "react-icons/io";
+import { TfiPencilAlt, TfiCheck, TfiPlus } from "react-icons/tfi";
 
 const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
+	// initialization
+	const inputRef = useRef(null);
 	const { id } = useParams();
 	const initial_task_state = {
 		id: "",
@@ -18,13 +25,25 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 	const isTodosExist = todos.length > 0;
 	const foundTodo = isTodosExist && todos.find((item) => item.id === id);
 
+	// state
+	const [toggleEdit, setToggleEdit] = useState(false);
 	const [thisTodo, setThisTodo] = useState(foundTodo);
 	const [taskForm, setTaskForm] = useState(initial_task_state);
 
+	// useEffects
+	// update todos
 	useEffect(() => {
 		setTodos((prev) => prev.map((todo) => (todo.id === id ? thisTodo : todo)));
 	}, [thisTodo]);
 
+	// focus
+	useEffect(() => {
+		if (toggleEdit) {
+			inputRef.current.focus();
+		}
+	}, [toggleEdit]);
+
+	// functions
 	const handleTaskForm = (e) => {
 		const { value } = e.target;
 		setTaskForm((prev) => ({ ...prev, name: value }));
@@ -41,6 +60,12 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 		setTaskForm(initial_task_state);
 	};
 
+	const handleEditTodoName = (e) => {
+		const { value } = e.target;
+		setThisTodo((prev) => ({ ...prev, title: value }));
+	};
+
+	// element
 	const tasksElement =
 		isTodosExist &&
 		thisTodo.tasks.map((task) => (
@@ -53,7 +78,7 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 			/>
 		));
 
-	const { day, month } = stringifyDate(thisTodo.date);
+	const { day, month } = thisTodo && stringifyDate(thisTodo.date);
 
 	return isTodosExist ? (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
@@ -62,15 +87,39 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 					<IoIosArrowBack />
 					Back
 				</Link>
-				<h2 className="text-xl tracking-wide">{thisTodo.title}</h2>
+				<form>
+					<input
+						ref={inputRef}
+						disabled={!toggleEdit}
+						onChange={handleEditTodoName}
+						type="text"
+						className={`text-xl tracking-wide text-center bg-white outline-none border border-white ${
+							toggleEdit && "border-green-400 rounded-lg"
+						}`}
+						value={thisTodo.title}
+					/>
+					<button
+						onClick={(e) => {
+							e.preventDefault();
+							setToggleEdit((prev) => !prev);
+						}}
+						className="absolute right-0 flex items-center top-1"
+					>
+						{toggleEdit ? <TfiCheck /> : <TfiPencilAlt />}
+					</button>
+				</form>
 			</div>
 
-			<div className="flex items-center gap-1 my-4">
+			<div className="flex gap-4 my-4">
 				<div className="w-1/2 px-2 py-1 text-sm border rounded-lg">
 					<h2 className="flex items-center gap-2">
 						<IoIosListBox />
 						{thisTodo.title}
 					</h2>
+					<p className="flex items-center gap-2">
+						<IoIosList />
+						{thisTodo.tasks.length} tasks
+					</p>
 					<p className="flex items-center gap-2">
 						<IoIosCalendar />
 						{day}, {thisTodo.date.getDate()} {month}
