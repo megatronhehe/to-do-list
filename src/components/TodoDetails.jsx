@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
+import Task from "./Task";
+
 import { IoIosArrowBack } from "react-icons/io";
 import { TfiPlus, TfiPencilAlt } from "react-icons/tfi";
-import { FaTrashAlt } from "react-icons/fa";
-import { BsSquare, BsFillCheckSquareFill } from "react-icons/bs";
 
 const TodoDetails = ({ todos, setTodos, createId }) => {
 	const { id } = useParams();
@@ -56,37 +56,17 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 		}));
 	};
 
-	console.log(thisTodo);
-
 	const tasksElement =
 		isTodosExist &&
 		thisTodo.tasks.map((task) => (
-			<div
+			<Task
 				key={task.id}
-				className="bg-gray-100 p-2 mt-2 rounded-md flex justify-between items-center "
-			>
-				<div className="flex items-center gap-2">
-					<button onClick={() => markTaskDone(task.id)}>
-						{task.done ? (
-							<BsFillCheckSquareFill className="text-green-400" />
-						) : (
-							<BsSquare />
-						)}
-					</button>
-					<h1 className="text-base">{task.name}</h1>
-				</div>
-				<div className="flex gap-2">
-					<button className="p-2 bg-white rounded-md">
-						<TfiPencilAlt />
-					</button>
-					<button
-						onClick={() => deleteTask(task.id)}
-						className="p-2 bg-white rounded-md"
-					>
-						<FaTrashAlt />
-					</button>
-				</div>
-			</div>
+				markTaskDone={markTaskDone}
+				id={task.id}
+				done={task.done}
+				name={task.name}
+				deleteTask={deleteTask}
+			/>
 		));
 
 	return isTodosExist ? (

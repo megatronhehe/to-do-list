@@ -88,7 +88,7 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 				</form>
 				<p className="flex items-center gap-2 mt-2 ml-2 text-xs text-gray-400 ">
 					{taskNotifText}
-					{countTaskDone === tasks.length && (
+					{countTaskDone === tasks.length && tasks.length > 0 && (
 						<span className="text-xl">
 							<BiCheckCircle />
 						</span>
