@@ -48,6 +48,7 @@ function App() {
 							path="/"
 							element={
 								<TodosList
+									todos={todos}
 									newTodoForm={newTodoForm}
 									setNewTodoForm={setNewTodoForm}
 									setTodos={setTodos}

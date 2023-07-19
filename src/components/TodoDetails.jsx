@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import Task from "./Task";
 import ErrorPage from "./ErrorPage";
 
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoIosListBox, IoIosCalendar } from "react-icons/io";
 import { TfiPlus, TfiPencilAlt } from "react-icons/tfi";
 
 const TodoDetails = ({ todos, setTodos, createId }) => {
@@ -41,6 +41,37 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 		setTaskForm(initial_task_state);
 	};
 
+	const day = () => {
+		const weekday = [
+			"Sunday",
+			"Monday",
+			"Tuesday",
+			"Wednesday",
+			"Thursday",
+			"Friday",
+			"Saturday",
+		];
+		return weekday[thisTodo.date.getDay()];
+	};
+
+	const month = () => {
+		const month = [
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December",
+		];
+		return month[thisTodo.date.getMonth()];
+	};
+
 	const tasksElement =
 		isTodosExist &&
 		thisTodo.tasks.map((task) => (
@@ -64,7 +95,17 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 			</div>
 
 			<div className="flex items-center gap-1 my-4">
-				<form className="flex w-full h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
+				<div className="w-1/2 border rounded-lg text-sm py-1 px-2">
+					<h2 className="flex items-center gap-2">
+						<IoIosListBox />
+						{thisTodo.title}
+					</h2>
+					<p className="flex items-center gap-2">
+						<IoIosCalendar />
+						{day()}, {thisTodo.date.getDate()} {month()}
+					</p>
+				</div>
+				<form className="flex w-1/2 h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
 					<input
 						onChange={handleTaskForm}
 						type="text"
@@ -83,7 +124,13 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 					</button>
 				</form>
 			</div>
-			{thisTodo.tasks.length > 0 && tasksElement}
+			{thisTodo.tasks.length > 0 ? (
+				tasksElement
+			) : (
+				<p className="text-center text-gray-400 text-sm my-8">
+					no task listed yet
+				</p>
+			)}
 		</div>
 	) : (
 		<ErrorPage />

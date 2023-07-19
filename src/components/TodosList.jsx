@@ -2,6 +2,7 @@ import { TfiPlus } from "react-icons/tfi";
 
 const TodosList = ({
 	children,
+	todos,
 	newTodoForm,
 	setNewTodoForm,
 	setTodos,
@@ -46,7 +47,13 @@ const TodosList = ({
 				</form>
 			</div>
 
-			<div className="grid w-full grid-cols-2 gap-4 mt-4 ">{children}</div>
+			{todos.length > 0 ? (
+				<div className="grid w-full grid-cols-2 gap-4 mt-4 ">{children}</div>
+			) : (
+				<div className="text-gray-400 text-sm text-center my-20">
+					<p>you have no todos yet . .</p>
+				</div>
+			)}
 		</div>
 	);
 };
