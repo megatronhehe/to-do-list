@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { FaTrashAlt } from "react-icons/fa";
 import { BsSquare, BsFillCheckSquareFill } from "react-icons/bs";
-import { TfiPencilAlt } from "react-icons/tfi";
+import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 
 const Task = ({ id, done, name, setThisTodo }) => {
+	const [toggleEdit, setToggleEdit] = useState(false);
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		if (toggleEdit) {
+			inputRef.current.focus();
+		}
+	}, [toggleEdit]);
+
 	const handleEditTaskName = (e) => {
 		const { value } = e.target;
 		setThisTodo((prev) => ({
@@ -33,24 +42,40 @@ const Task = ({ id, done, name, setThisTodo }) => {
 
 	return (
 		<div className="bg-gray-100 p-2 mt-2 rounded-md flex justify-between items-center ">
-			<div onClick={markTaskDone} className="flex items-center gap-2">
-				<p>
+			<div className="flex items-center gap-2">
+				<button onClick={markTaskDone}>
 					{done ? (
 						<BsFillCheckSquareFill className="text-green-400" />
 					) : (
 						<BsSquare />
 					)}
-				</p>
-				<input
-					onChange={handleEditTaskName}
-					type="text"
-					name="name"
-					value={name}
-				/>
+				</button>
+				<form>
+					<input
+						ref={inputRef}
+						disabled={!toggleEdit}
+						className={`px-2 py-1 rounded-md outline-none ${
+							toggleEdit ? "bg-white" : "bg-gray-100"
+						}`}
+						onChange={handleEditTaskName}
+						type="text"
+						name="name"
+						value={name}
+					/>
+					<button
+						onClick={(e) => {
+							e.preventDefault();
+							setToggleEdit(false);
+						}}
+					></button>
+				</form>
 			</div>
 			<div className="flex gap-2">
-				<button className="p-2 bg-white rounded-md">
-					<TfiPencilAlt />
+				<button
+					onClick={() => setToggleEdit((prev) => !prev)}
+					className="p-2 bg-white rounded-md"
+				>
+					{toggleEdit ? <TfiCheck /> : <TfiPencilAlt />}
 				</button>
 				<button onClick={deleteTask} className="p-2 bg-white rounded-md">
 					<FaTrashAlt />
