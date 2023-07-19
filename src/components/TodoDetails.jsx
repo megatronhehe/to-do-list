@@ -93,8 +93,8 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 						disabled={!toggleEdit}
 						onChange={handleEditTodoName}
 						type="text"
-						className={`text-xl tracking-wide text-center bg-white outline-none border border-white ${
-							toggleEdit && "border-green-400 rounded-lg"
+						className={`text-xl tracking-wide text-center outline-none border rounded-md border-white ${
+							toggleEdit ? "bg-gray-100" : "bg-white"
 						}`}
 						value={thisTodo.title}
 					/>
