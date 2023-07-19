@@ -5,9 +5,9 @@ import Task from "./Task";
 import ErrorPage from "./ErrorPage";
 
 import { IoIosArrowBack, IoIosListBox, IoIosCalendar } from "react-icons/io";
-import { TfiPlus, TfiPencilAlt } from "react-icons/tfi";
+import { TfiPlus } from "react-icons/tfi";
 
-const TodoDetails = ({ todos, setTodos, createId }) => {
+const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 	const { id } = useParams();
 	const initial_task_state = {
 		id: "",
@@ -41,37 +41,6 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 		setTaskForm(initial_task_state);
 	};
 
-	const day = () => {
-		const weekday = [
-			"Sunday",
-			"Monday",
-			"Tuesday",
-			"Wednesday",
-			"Thursday",
-			"Friday",
-			"Saturday",
-		];
-		return weekday[thisTodo.date.getDay()];
-	};
-
-	const month = () => {
-		const month = [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December",
-		];
-		return month[thisTodo.date.getMonth()];
-	};
-
 	const tasksElement =
 		isTodosExist &&
 		thisTodo.tasks.map((task) => (
@@ -84,6 +53,8 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 			/>
 		));
 
+	const { day, month } = stringifyDate(thisTodo.date);
+
 	return isTodosExist ? (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
 			<div className="relative flex items-center justify-center pb-2 border-b">
@@ -95,14 +66,14 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 			</div>
 
 			<div className="flex items-center gap-1 my-4">
-				<div className="w-1/2 border rounded-lg text-sm py-1 px-2">
+				<div className="w-1/2 px-2 py-1 text-sm border rounded-lg">
 					<h2 className="flex items-center gap-2">
 						<IoIosListBox />
 						{thisTodo.title}
 					</h2>
 					<p className="flex items-center gap-2">
 						<IoIosCalendar />
-						{day()}, {thisTodo.date.getDate()} {month()}
+						{day}, {thisTodo.date.getDate()} {month}
 					</p>
 				</div>
 				<form className="flex w-1/2 h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
@@ -127,7 +98,7 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 			{thisTodo.tasks.length > 0 ? (
 				tasksElement
 			) : (
-				<p className="text-center text-gray-400 text-sm my-8">
+				<p className="my-8 text-sm text-center text-gray-400">
 					no task listed yet
 				</p>
 			)}

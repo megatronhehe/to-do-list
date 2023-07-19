@@ -7,7 +7,7 @@ const TodosList = ({
 	setNewTodoForm,
 	setTodos,
 	createId,
-	initial_form_state,
+	initial_todo_state,
 }) => {
 	const handleCreateTodo = (e) => {
 		const { name, value } = e.target;
@@ -17,7 +17,7 @@ const TodosList = ({
 	const addNewTodo = (e) => {
 		e.preventDefault();
 		setTodos((prev) => [...prev, newTodoForm]);
-		setNewTodoForm(initial_form_state);
+		setNewTodoForm(initial_todo_state);
 	};
 
 	return (
@@ -50,7 +50,7 @@ const TodosList = ({
 			{todos.length > 0 ? (
 				<div className="grid w-full grid-cols-2 gap-4 mt-4 ">{children}</div>
 			) : (
-				<div className="text-gray-400 text-sm text-center my-20">
+				<div className="my-20 text-sm text-center text-gray-400">
 					<p>you have no todos yet . .</p>
 				</div>
 			)}

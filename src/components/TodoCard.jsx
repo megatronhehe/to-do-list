@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
 import { BiCheckCircle } from "react-icons/bi";
 
-const TodoCard = ({ id, title, tasks, date, setTodos }) => {
+const TodoCard = ({ id, title, tasks, date, setTodos, stringifyDate }) => {
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const inputRef = useRef(null);
 
@@ -25,37 +25,6 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 		setTodos((prev) => prev.filter((todo) => todo.id !== id));
 	};
 
-	const day = () => {
-		const weekday = [
-			"Sunday",
-			"Monday",
-			"Tuesday",
-			"Wednesday",
-			"Thursday",
-			"Friday",
-			"Saturday",
-		];
-		return weekday[date.getDay()];
-	};
-
-	const month = () => {
-		const month = [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December",
-		];
-		return month[date.getMonth()];
-	};
-
 	const countTaskDone = tasks.filter((task) => task.done).length;
 
 	const taskNotifText =
@@ -64,6 +33,8 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 				? "all tasks are completed!"
 				: `${countTaskDone} / ${tasks.length} is done`
 			: "no task listed yet";
+
+	const { day, month } = stringifyDate(date);
 
 	return (
 		<div className="relative p-2 text-sm bg-gray-100 rounded-lg">
@@ -95,10 +66,11 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 					)}
 				</p>
 				<div className="mt-12 font-light tracking-wide text-end">
-					<p>{day()}</p>
+					<p>{day}</p>
 					<p>
-						{date.getDate()} <span>{month()}</span>
+						{date.getDate()} <span>{month}</span>
 					</p>
+					<p></p>
 				</div>
 			</Link>
 
