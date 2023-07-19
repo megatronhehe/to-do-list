@@ -22,7 +22,7 @@ const TodosList = ({
 	return (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
 			<div className="flex items-center justify-center pb-2 border-b">
-				<h2 className="text-xl tracking-wide">Select Todos</h2>
+				<h2 className="text-xl tracking-wide">Your Todos</h2>
 			</div>
 
 			<div className="flex items-center gap-1 mt-4">
@@ -33,7 +33,7 @@ const TodosList = ({
 						name="title"
 						value={newTodoForm.title}
 						className="w-5/6 px-4 tracking-wide rounded-md"
-						placeholder="todo name"
+						placeholder="what are you going to do today?"
 					/>
 
 					<button

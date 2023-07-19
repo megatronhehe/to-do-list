@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
+import { BiCheckCircle } from "react-icons/bi";
 
 const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 	const [toggleEdit, setToggleEdit] = useState(false);
@@ -55,6 +56,15 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 		return month[date.getMonth()];
 	};
 
+	const countTaskDone = tasks.filter((task) => task.done).length;
+
+	const taskNotifText =
+		tasks.length > 0
+			? tasks.length === countTaskDone
+				? "all tasks are completed!"
+				: `${countTaskDone} / ${tasks.length} is done`
+			: "no task listed yet";
+
 	return (
 		<div className="relative p-2 text-sm bg-gray-100 rounded-lg">
 			<Link to={`/${id}`}>
@@ -76,7 +86,14 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 						}}
 					></button>
 				</form>
-				<p className="mt-2 text-xs text-gray-400 ">5 / 7 tasks completed</p>
+				<p className="flex items-center gap-2 mt-2 ml-2 text-xs text-gray-400 ">
+					{taskNotifText}
+					{countTaskDone === tasks.length && (
+						<span className="text-xl">
+							<BiCheckCircle />
+						</span>
+					)}
+				</p>
 				<div className="mt-12 font-light tracking-wide text-end">
 					<p>{day()}</p>
 					<p>
