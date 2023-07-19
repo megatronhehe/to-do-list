@@ -4,18 +4,33 @@ import { FaTrashAlt } from "react-icons/fa";
 import { BsSquare, BsFillCheckSquareFill } from "react-icons/bs";
 import { TfiPencilAlt } from "react-icons/tfi";
 
-const Task = ({ markTaskDone, id, done, name, deleteTask }) => {
+const Task = ({ markTaskDone, id, done, name, deleteTask, setThisTodo }) => {
+	const handleEditTaskName = (e) => {
+		const { value } = e.target;
+		setThisTodo((prev) => ({
+			...prev,
+			tasks: prev.tasks.map((task) =>
+				task.id === id ? { ...task, name: value } : task
+			),
+		}));
+	};
+
 	return (
 		<div className="bg-gray-100 p-2 mt-2 rounded-md flex justify-between items-center ">
-			<div className="flex items-center gap-2">
-				<button onClick={() => markTaskDone(id)}>
+			<div onClick={() => markTaskDone(id)} className="flex items-center gap-2">
+				<p>
 					{done ? (
 						<BsFillCheckSquareFill className="text-green-400" />
 					) : (
 						<BsSquare />
 					)}
-				</button>
-				<h1 className="text-base">{name}</h1>
+				</p>
+				<input
+					onChange={handleEditTaskName}
+					type="text"
+					name="name"
+					value={name}
+				/>
 			</div>
 			<div className="flex gap-2">
 				<button className="p-2 bg-white rounded-md">

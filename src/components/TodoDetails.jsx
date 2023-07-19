@@ -66,6 +66,7 @@ const TodoDetails = ({ todos, setTodos, createId }) => {
 				done={task.done}
 				name={task.name}
 				deleteTask={deleteTask}
+				setThisTodo={setThisTodo}
 			/>
 		));
 
