@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import TodosList from "./components/TodosList";
@@ -16,9 +16,21 @@ function App() {
 		date: new Date(),
 	};
 
+	const storedTodos =
+		localStorage.length > 0
+			? JSON.parse(localStorage.getItem("todos")).map((todo) => ({
+					...todo,
+					date: new Date(todo.date),
+			  }))
+			: [];
+
 	// STATES
-	const [todos, setTodos] = useState([]);
+	const [todos, setTodos] = useState(storedTodos);
 	const [newTodoForm, setNewTodoForm] = useState(initial_todo_state);
+
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}, [todos]);
 
 	// functions
 	const createId = () => {

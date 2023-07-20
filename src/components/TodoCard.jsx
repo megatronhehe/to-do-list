@@ -68,7 +68,8 @@ const TodoCard = ({ id, title, tasks, date, setTodos, stringifyDate }) => {
 				<div className="mt-12 font-light tracking-wide text-end">
 					<p>{day}</p>
 					<p>
-						{date.getDate()} <span>{month}</span>
+						{date.getDate()}
+						<span>{month}</span>
 					</p>
 				</div>
 			</Link>
