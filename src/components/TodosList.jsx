@@ -1,4 +1,4 @@
-import { TfiPlus } from "react-icons/tfi";
+import { HiPlus } from "react-icons/hi";
 
 const TodosList = ({
 	children,
@@ -42,9 +42,9 @@ const TodosList = ({
 					<button
 						onClick={addNewTodo}
 						disabled={!newTodoForm.title}
-						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-md"
+						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full"
 					>
-						<TfiPlus />
+						<HiPlus />
 					</button>
 				</form>
 			</div>

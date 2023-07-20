@@ -10,7 +10,8 @@ import {
 	IoIosCalendar,
 	IoIosList,
 } from "react-icons/io";
-import { TfiPencilAlt, TfiCheck, TfiPlus } from "react-icons/tfi";
+import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
+import { HiPlus } from "react-icons/hi";
 
 const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 	// initialization
@@ -93,7 +94,7 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 						disabled={!toggleEdit}
 						onChange={handleEditTodoName}
 						type="text"
-						className={`text-xl tracking-wide text-center outline-none border rounded-md border-white ${
+						className={`text-xl tracking-wide text-center outline-none border rounded-full border-white ${
 							toggleEdit ? "bg-gray-100" : "bg-white"
 						}`}
 						value={thisTodo.title}
@@ -138,9 +139,9 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 					<button
 						disabled={!taskForm.name}
 						onClick={addTask}
-						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-md"
+						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full"
 					>
-						<TfiPlus />
+						<HiPlus />
 					</button>
 				</form>
 			</div>
