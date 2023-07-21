@@ -60,16 +60,15 @@ const TodoCard = ({ id, title, tasks, date, setTodos, stringifyDate }) => {
 				<p className="flex items-center gap-2 mt-2 ml-2 text-xs text-gray-400 ">
 					{taskNotifText}
 					{countTaskDone === tasks.length && tasks.length > 0 && (
-						<span className="text-xl">
+						<span className="text-2xl text-green-400">
 							<BiCheckCircle />
 						</span>
 					)}
 				</p>
 				<div className="mt-12 font-light tracking-wide text-end">
-					<p>{day}</p>
+					<p className="text-lg">{day}</p>
 					<p>
-						{date.getDate()}
-						<span>{month}</span>
+						{date.getDate()} <span>{month}</span>
 					</p>
 				</div>
 			</Link>
