@@ -4,14 +4,10 @@ import { useParams, Link } from "react-router-dom";
 import Task from "./Task";
 import ErrorPage from "./ErrorPage";
 
-import {
-	IoIosArrowBack,
-	IoIosListBox,
-	IoIosCalendar,
-	IoIosList,
-} from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
+import { BiCheckCircle, BiTask } from "react-icons/bi";
 
 const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 	// initialization
@@ -66,6 +62,10 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 		setThisTodo((prev) => ({ ...prev, title: value }));
 	};
 
+	const countPercentage = (tasksDone, tasksLength) => {
+		return (tasksDone / tasksLength) * 100;
+	};
+
 	// element
 	const tasksElement =
 		isTodosExist &&
@@ -78,6 +78,8 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 				setThisTodo={setThisTodo}
 			/>
 		));
+
+	const countTaskDone = thisTodo.tasks.filter((task) => task.done).length;
 
 	const { day, month } = thisTodo && stringifyDate(thisTodo.date);
 
@@ -111,22 +113,33 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 				</form>
 			</div>
 
-			<div className="flex gap-4 my-4">
-				<div className="w-1/2 px-2 py-1 text-sm border rounded-lg">
-					<h2 className="flex items-center gap-2">
-						<IoIosListBox />
-						{thisTodo.title}
-					</h2>
-					<p className="flex items-center gap-2">
-						<IoIosList />
-						{thisTodo.tasks.length} tasks
-					</p>
-					<p className="flex items-center gap-2">
-						<IoIosCalendar />
-						{day}, {thisTodo.date.getDate()} {month}
-					</p>
+			<div className="flex flex-col gap-2 my-4">
+				<div className="flex justify-between px-4 py-2 text-lg text-gray-100 bg-gray-600 border rounded-lg">
+					<div className="text-center">
+						<p className="flex items-center gap-2">
+							<BiTask />
+							{countTaskDone}/{thisTodo.tasks.length}{" "}
+							<span className="text-sm">tasks completed</span>
+						</p>
+						{countPercentage(countTaskDone, thisTodo.tasks.length) === 100 ? (
+							<p className="flex items-center gap-2 text-sm text-green-400">
+								fully completed! <BiCheckCircle className="text-xl" />
+							</p>
+						) : (
+							<p className="flex items-center text-sm font-semibold">
+								{countPercentage(countTaskDone, thisTodo.tasks.length)}%
+								progress
+							</p>
+						)}
+					</div>
+					<div className="font-light">
+						<p>{day},</p>
+						<p className="text-sm">
+							{thisTodo.date.getDate()} {month}
+						</p>
+					</div>
 				</div>
-				<form className="flex w-1/2 h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
+				<form className="flex h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
 					<input
 						onChange={handleTaskForm}
 						type="text"
@@ -139,7 +152,7 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 					<button
 						disabled={!taskForm.name}
 						onClick={addTask}
-						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full"
+						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full cursor-pointer"
 					>
 						<HiPlus />
 					</button>

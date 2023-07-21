@@ -41,8 +41,8 @@ const Task = ({ id, done, name, setThisTodo }) => {
 	};
 
 	return (
-		<div className="bg-gray-100 p-2 mt-2 rounded-md flex justify-between items-center ">
-			<div className="flex items-center gap-2">
+		<div className="flex items-center justify-between p-2 mt-2 bg-gray-100 rounded-md ">
+			<div className="flex items-center w-full gap-2 pr-2">
 				<button onClick={markTaskDone}>
 					{done ? (
 						<BsFillCheckSquareFill className="text-green-400" />
@@ -50,11 +50,11 @@ const Task = ({ id, done, name, setThisTodo }) => {
 						<BsSquare />
 					)}
 				</button>
-				<form>
+				<form className="w-full">
 					<input
 						ref={inputRef}
 						disabled={!toggleEdit}
-						className={`px-2 py-1 rounded-md outline-none ${
+						className={`px-2 py-1 rounded-md w-full outline-none ${
 							toggleEdit ? "bg-white" : "bg-gray-100"
 						}`}
 						onChange={handleEditTaskName}
