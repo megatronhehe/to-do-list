@@ -66,10 +66,17 @@ const TodoDetails = () => {
 		setTaskForm(initial_task_state);
 	};
 
-	const toggleAllTaskDone = () => {
+	const markAllTaskDone = () => {
 		setThisTodo((prev) => ({
 			...prev,
-			tasks: prev.tasks.map((task) => ({ ...task, done: !task.done })),
+			tasks: prev.tasks.map((task) => ({ ...task, done: true })),
+		}));
+	};
+
+	const markAllTaskNotDone = () => {
+		setThisTodo((prev) => ({
+			...prev,
+			tasks: prev.tasks.map((task) => ({ ...task, done: false })),
 		}));
 	};
 
@@ -155,7 +162,7 @@ const TodoDetails = () => {
 					</div>
 
 					<button
-						onClick={toggleAllTaskDone}
+						onClick={isAllTasksDone ? markAllTaskNotDone : markAllTaskDone}
 						className={`px-1 flex flex-col items-center justify-around w-1/5 text-xs  rounded-md ${
 							isAllTasksDone
 								? "text-gray-600 bg-gray-300"
