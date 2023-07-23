@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import TodosList from "./components/TodosList";
 import TodoCard from "./components/TodoCard";
 import TodoDetails from "./components/TodoDetails";
 
-import { Routes, Route } from "react-router-dom";
+import { stringifyDate } from "./utils/stringfyDate";
+import { createId } from "./utils/createId";
 
 function App() {
 	const initial_todo_state = {
@@ -32,41 +34,6 @@ function App() {
 		localStorage.setItem("todos", JSON.stringify(todos));
 	}, [todos]);
 
-	// functions
-	const createId = () => {
-		const id = new Date();
-		return `${id.getMilliseconds()}${id.getSeconds()}${id.getMinutes()}${id.getHours()}${id.getDate()}${id.getMonth()}${id.getFullYear()}`;
-	};
-
-	const stringifyDate = (date) => {
-		const dayNumber = date.getDay();
-		const monthNumber = date.getMonth();
-		const weekdayArray = [
-			"Sunday",
-			"Monday",
-			"Tuesday",
-			"Wednesday",
-			"Thursday",
-			"Friday",
-			"Saturday",
-		];
-		const monthArray = [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December",
-		];
-		return { day: weekdayArray[dayNumber], month: monthArray[monthNumber] };
-	};
-
 	// ELEMENTS
 	const TodosCardElement = todos.map((todo) => (
 		<TodoCard
@@ -74,7 +41,6 @@ function App() {
 			id={todo.id}
 			title={todo.title}
 			tasks={todo.tasks}
-			stringifyDate={stringifyDate}
 			date={todo.date}
 			setTodos={setTodos}
 		/>

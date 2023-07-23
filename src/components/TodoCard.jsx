@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+import { stringifyDate } from "../utils/stringfyDate";
+
 import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
 import { BiCheckCircle } from "react-icons/bi";
 
-const TodoCard = ({ id, title, tasks, date, setTodos, stringifyDate }) => {
+const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const inputRef = useRef(null);
 

@@ -4,12 +4,15 @@ import { useParams, Link } from "react-router-dom";
 import Task from "./Task";
 import ErrorPage from "./ErrorPage";
 
+import { stringifyDate } from "../utils/stringfyDate";
+import { createId } from "../utils/createId";
+
 import { IoIosArrowBack } from "react-icons/io";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
 import { BiCheckCircle, BiTask } from "react-icons/bi";
 
-const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
+const TodoDetails = ({ todos, setTodos }) => {
 	// initialization
 	const inputRef = useRef(null);
 	const { id } = useParams();
@@ -27,8 +30,7 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 	const [thisTodo, setThisTodo] = useState(foundTodo);
 	const [taskForm, setTaskForm] = useState(initial_task_state);
 
-	// useEffects
-	// update todos
+	// useEffects update todos
 	useEffect(() => {
 		setTodos((prev) => prev.map((todo) => (todo.id === id ? thisTodo : todo)));
 	}, [thisTodo]);
@@ -114,7 +116,7 @@ const TodoDetails = ({ todos, setTodos, createId, stringifyDate }) => {
 			</div>
 
 			<div className="flex flex-col gap-2 my-4">
-				<div className="flex justify-between px-4 py-2 text-lg text-gray-100 bg-gray-600 border rounded-lg">
+				<div className="flex justify-between p-8 text-lg text-gray-100 bg-gray-600 border rounded-lg">
 					<div className="text-center">
 						<p className="flex items-center gap-2">
 							<BiTask />

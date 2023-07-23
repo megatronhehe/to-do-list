@@ -1,3 +1,7 @@
+import React from "react";
+
+import { createId } from "../utils/createId";
+
 import { HiPlus } from "react-icons/hi";
 
 const TodosList = ({
@@ -6,7 +10,6 @@ const TodosList = ({
 	newTodoForm,
 	setNewTodoForm,
 	setTodos,
-	createId,
 	initial_todo_state,
 }) => {
 	const handleCreateTodo = (e) => {
