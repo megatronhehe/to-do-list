@@ -14,8 +14,7 @@ import { countPercentage } from "../utils/countPercentage";
 import { IoIosArrowBack } from "react-icons/io";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
-import { BiCheckCircle, BiTask } from "react-icons/bi";
-import { PiListChecks } from "react-icons/pi";
+import { BiCheckCircle, BiTask, BiCheck, BiX } from "react-icons/bi";
 
 const TodoDetails = () => {
 	const { todos, setTodos, editTodoName } = useContext(TodosContext);
@@ -73,7 +72,7 @@ const TodoDetails = () => {
 		}));
 	};
 
-	const markAllTaskNotDone = () => {
+	const markAllTaskUndone = () => {
 		setThisTodo((prev) => ({
 			...prev,
 			tasks: prev.tasks.map((task) => ({ ...task, done: false })),
@@ -133,7 +132,7 @@ const TodoDetails = () => {
 
 			<div className="flex flex-col gap-2 my-4">
 				<div className="flex gap-2">
-					<div className="flex justify-between w-4/5 px-4 py-6 text-lg text-gray-100 bg-gray-600 border rounded-lg">
+					<div className="flex justify-between w-full px-4 py-6 text-lg text-gray-100 bg-gray-600 border rounded-lg">
 						<div className="text-center">
 							<p className="flex items-center gap-2 mb-4">
 								<BiTask />
@@ -160,24 +159,24 @@ const TodoDetails = () => {
 							</p>
 						</div>
 					</div>
+				</div>
 
+				<div className="flex items-start justify-end gap-2 text-xs text-white">
+					<p className="text-gray-400">mark all tasks as :</p>
 					<button
-						onClick={isAllTasksDone ? markAllTaskNotDone : markAllTaskDone}
-						className={`px-1 flex flex-col items-center justify-around w-1/5 text-xs  rounded-md ${
-							isAllTasksDone
-								? "text-gray-600 bg-gray-300"
-								: "text-white bg-green-400"
-						}`}
+						onClick={markAllTaskDone}
+						className="flex items-center justify-center w-1/4 gap-1 py-2 bg-green-400"
 					>
-						<PiListChecks className="text-4xl " />
-						<p className="">
-							mark all tasks as{" "}
-							<span className="font-semibold tracking-wide">
-								{isAllTasksDone ? "not done" : "done"}
-							</span>
-						</p>
+						done <BiCheck className="text-base" />
+					</button>
+					<button
+						onClick={markAllTaskUndone}
+						className="flex items-center justify-center w-1/4 gap-1 py-2 bg-gray-400"
+					>
+						undone <BiX className="text-base" />
 					</button>
 				</div>
+
 				<form className="flex h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
 					<input
 						onChange={handleTaskForm}
