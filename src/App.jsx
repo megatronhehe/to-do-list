@@ -75,7 +75,6 @@ function App() {
 								todos={todos}
 								setTodos={setTodos}
 								createId={createId}
-								stringifyDate={stringifyDate}
 							/>
 						}
 					></Route>
