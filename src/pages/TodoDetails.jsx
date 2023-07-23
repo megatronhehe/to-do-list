@@ -17,7 +17,7 @@ import { HiPlus } from "react-icons/hi";
 import { BiCheckCircle, BiTask } from "react-icons/bi";
 
 const TodoDetails = () => {
-	const { todos, setTodos } = useContext(TodosContext);
+	const { todos, setTodos, editTodoName } = useContext(TodosContext);
 	// initialization
 	const inputRef = useRef(null);
 	const { id } = useParams();
@@ -65,11 +65,6 @@ const TodoDetails = () => {
 		setTaskForm(initial_task_state);
 	};
 
-	const handleEditTodoName = (e) => {
-		const { value } = e.target;
-		setThisTodo((prev) => ({ ...prev, title: value }));
-	};
-
 	// element
 	const tasksElement =
 		isTodosExist &&
@@ -98,12 +93,12 @@ const TodoDetails = () => {
 					<input
 						ref={inputRef}
 						disabled={!toggleEdit}
-						onChange={handleEditTodoName}
+						onChange={(e) => editTodoName(thisTodo.id, e)}
 						type="text"
 						className={`text-xl tracking-wide text-center outline-none border rounded-full border-white ${
 							toggleEdit ? "bg-gray-100" : "bg-white"
 						}`}
-						value={thisTodo.title}
+						value={foundTodo.title}
 					/>
 					<button
 						onClick={(e) => {

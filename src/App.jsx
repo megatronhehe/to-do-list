@@ -11,7 +11,6 @@ import TodosList from "./pages/TodosList";
 import { TodosContext } from "./context/TodosContext";
 
 function App() {
-	// TodosContext
 	const { todos } = useContext(TodosContext);
 
 	// ELEMENTS

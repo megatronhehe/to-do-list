@@ -9,7 +9,7 @@ import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
 import { BiCheckCircle } from "react-icons/bi";
 
 const TodoCard = ({ id, title, tasks, date }) => {
-	const { deleteTodo, setTodos } = useContext(TodosContext);
+	const { deleteTodo, editTodoName } = useContext(TodosContext);
 
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const inputRef = useRef(null);
@@ -19,13 +19,6 @@ const TodoCard = ({ id, title, tasks, date }) => {
 			inputRef.current.focus();
 		}
 	}, [toggleEdit]);
-
-	const editTodoName = (e) => {
-		const { value } = e.target;
-		setTodos((prev) =>
-			prev.map((item) => (item.id === id ? { ...item, title: value } : item))
-		);
-	};
 
 	const countTaskDone = tasks.filter((task) => task.done).length;
 
@@ -46,7 +39,7 @@ const TodoCard = ({ id, title, tasks, date }) => {
 						name="title"
 						ref={inputRef}
 						disabled={!toggleEdit}
-						onChange={editTodoName}
+						onChange={(e) => editTodoName(id, e)}
 						className={`cursor-pointer outline-none text-base rounded-md w-full p-2 ${
 							toggleEdit ? "bg-white" : "bg-gray-100 "
 						}`}
