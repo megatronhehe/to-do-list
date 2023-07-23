@@ -44,6 +44,7 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 			<Link to={`/${id}`}>
 				<form>
 					<input
+						name="title"
 						ref={inputRef}
 						disabled={!toggleEdit}
 						onChange={editTodoName}

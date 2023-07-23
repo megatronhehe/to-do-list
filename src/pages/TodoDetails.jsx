@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 
-import Task from "./Task";
-import ErrorPage from "./ErrorPage";
+import Task from "../components/Task";
+import ErrorPage from "../components/ErrorPage";
 
 import { stringifyDate } from "../utils/stringfyDate";
 import { createId } from "../utils/createId";

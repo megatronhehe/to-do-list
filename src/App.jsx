@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
-import TodosList from "./components/TodosList";
 import TodoCard from "./components/TodoCard";
-import TodoDetails from "./components/TodoDetails";
+import Container from "./components/Container";
+
+import TodoDetails from "./pages/TodoDetails";
+import TodosList from "./pages/TodosList";
 
 import { stringifyDate } from "./utils/stringfyDate";
 import { createId } from "./utils/createId";
@@ -48,39 +50,37 @@ function App() {
 
 	return (
 		<>
-			<div className="flex justify-center h-screen py-8 text-gray-600 bg-gray-100">
-				<div className="w-full max-w-xl ">
-					<Header />
-					<Routes>
-						<Route
-							path="/"
-							element={
-								<TodosList
-									todos={todos}
-									newTodoForm={newTodoForm}
-									setNewTodoForm={setNewTodoForm}
-									setTodos={setTodos}
-									createId={createId}
-									initial_todo_state={initial_todo_state}
-								>
-									{todos.length > 0 && TodosCardElement}
-								</TodosList>
-							}
-						></Route>
-						<Route
-							path="/:id"
-							element={
-								<TodoDetails
-									todos={todos}
-									setTodos={setTodos}
-									createId={createId}
-									stringifyDate={stringifyDate}
-								/>
-							}
-						></Route>
-					</Routes>
-				</div>
-			</div>
+			<Container>
+				<Header />
+				<Routes>
+					<Route
+						path="/"
+						element={
+							<TodosList
+								todos={todos}
+								newTodoForm={newTodoForm}
+								setNewTodoForm={setNewTodoForm}
+								setTodos={setTodos}
+								createId={createId}
+								initial_todo_state={initial_todo_state}
+							>
+								{todos.length > 0 && TodosCardElement}
+							</TodosList>
+						}
+					></Route>
+					<Route
+						path="/:id"
+						element={
+							<TodoDetails
+								todos={todos}
+								setTodos={setTodos}
+								createId={createId}
+								stringifyDate={stringifyDate}
+							/>
+						}
+					></Route>
+				</Routes>
+			</Container>
 		</>
 	);
 }
