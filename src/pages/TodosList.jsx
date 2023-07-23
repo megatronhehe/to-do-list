@@ -1,27 +1,11 @@
-import React from "react";
-
-import { createId } from "../utils/createId";
+import React, { useContext } from "react";
+import { TodosContext } from "../context/TodosContext";
 
 import { HiPlus } from "react-icons/hi";
 
-const TodosList = ({
-	children,
-	todos,
-	newTodoForm,
-	setNewTodoForm,
-	setTodos,
-	initial_todo_state,
-}) => {
-	const handleCreateTodo = (e) => {
-		const { name, value } = e.target;
-		setNewTodoForm((prev) => ({ ...prev, id: createId(), [name]: value }));
-	};
-
-	const addNewTodo = (e) => {
-		e.preventDefault();
-		setTodos((prev) => [newTodoForm, ...prev]);
-		setNewTodoForm(initial_todo_state);
-	};
+const TodosList = ({ children }) => {
+	const { todos, handleCreateTodo, addNewTodo, newTodoForm } =
+		useContext(TodosContext);
 
 	return (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">

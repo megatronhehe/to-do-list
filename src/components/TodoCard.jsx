@@ -1,12 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+
+import { TodosContext } from "../context/TodosContext";
 
 import { stringifyDate } from "../utils/stringfyDate";
 
 import { TfiPencilAlt, TfiCheck, TfiTrash } from "react-icons/tfi";
 import { BiCheckCircle } from "react-icons/bi";
 
-const TodoCard = ({ id, title, tasks, date, setTodos }) => {
+const TodoCard = ({ id, title, tasks, date }) => {
+	const { deleteTodo, setTodos } = useContext(TodosContext);
+
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const inputRef = useRef(null);
 
@@ -21,11 +25,6 @@ const TodoCard = ({ id, title, tasks, date, setTodos }) => {
 		setTodos((prev) =>
 			prev.map((item) => (item.id === id ? { ...item, title: value } : item))
 		);
-	};
-
-	const deleteTodo = (id, e) => {
-		e.stopPropagation();
-		setTodos((prev) => prev.filter((todo) => todo.id !== id));
 	};
 
 	const countTaskDone = tasks.filter((task) => task.done).length;

@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
+
+import { TodosContext } from "../context/TodosContext";
 
 import Task from "../components/Task";
 
@@ -7,16 +9,19 @@ import ErrorPage from "./ErrorPage";
 
 import { stringifyDate } from "../utils/stringfyDate";
 import { createId } from "../utils/createId";
+import { countPercentage } from "../utils/countPercentage";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
 import { BiCheckCircle, BiTask } from "react-icons/bi";
 
-const TodoDetails = ({ todos, setTodos }) => {
+const TodoDetails = () => {
+	const { todos, setTodos } = useContext(TodosContext);
 	// initialization
 	const inputRef = useRef(null);
 	const { id } = useParams();
+
 	const initial_task_state = {
 		id: "",
 		name: "",
@@ -26,7 +31,7 @@ const TodoDetails = ({ todos, setTodos }) => {
 	const isTodosExist = todos.length > 0;
 	const foundTodo = isTodosExist && todos.find((item) => item.id === id);
 
-	// state
+	// states
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const [thisTodo, setThisTodo] = useState(foundTodo);
 	const [taskForm, setTaskForm] = useState(initial_task_state);
@@ -63,10 +68,6 @@ const TodoDetails = ({ todos, setTodos }) => {
 	const handleEditTodoName = (e) => {
 		const { value } = e.target;
 		setThisTodo((prev) => ({ ...prev, title: value }));
-	};
-
-	const countPercentage = (tasksDone, tasksLength) => {
-		return (tasksDone / tasksLength) * 100;
 	};
 
 	// element
