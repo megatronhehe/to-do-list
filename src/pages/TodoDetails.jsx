@@ -15,6 +15,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
 import { BiCheckCircle, BiTask } from "react-icons/bi";
+import { PiListChecks } from "react-icons/pi";
 
 const TodoDetails = () => {
 	const { todos, setTodos, editTodoName } = useContext(TodosContext);
@@ -65,6 +66,13 @@ const TodoDetails = () => {
 		setTaskForm(initial_task_state);
 	};
 
+	const toggleAllTaskDone = () => {
+		setThisTodo((prev) => ({
+			...prev,
+			tasks: prev.tasks.map((task) => ({ ...task, done: !task.done })),
+		}));
+	};
+
 	// element
 	const tasksElement =
 		isTodosExist &&
@@ -78,9 +86,13 @@ const TodoDetails = () => {
 			/>
 		));
 
+	// variables
 	const countTaskDone = thisTodo.tasks.filter((task) => task.done).length;
 
 	const { day, month } = thisTodo && stringifyDate(thisTodo.date);
+
+	const isAllTasksDone =
+		thisTodo.tasks.length > 0 && countTaskDone / thisTodo.tasks.length === 1;
 
 	return isTodosExist ? (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
@@ -113,30 +125,51 @@ const TodoDetails = () => {
 			</div>
 
 			<div className="flex flex-col gap-2 my-4">
-				<div className="flex justify-between p-8 text-lg text-gray-100 bg-gray-600 border rounded-lg">
-					<div className="text-center">
-						<p className="flex items-center gap-2">
-							<BiTask />
-							{countTaskDone}/{thisTodo.tasks.length}{" "}
-							<span className="text-sm">tasks completed</span>
-						</p>
-						{countPercentage(countTaskDone, thisTodo.tasks.length) === 100 ? (
-							<p className="flex items-center gap-2 text-sm text-green-400">
-								fully completed! <BiCheckCircle className="text-xl" />
+				<div className="flex gap-2">
+					<div className="flex justify-between w-4/5 px-4 py-6 text-lg text-gray-100 bg-gray-600 border rounded-lg">
+						<div className="text-center">
+							<p className="flex items-center gap-2 mb-4">
+								<BiTask />
+								{countTaskDone}/{thisTodo.tasks.length}{" "}
+								<span className="flex text-xs">tasks completed</span>
 							</p>
-						) : (
-							<p className="flex items-center text-sm font-semibold">
-								{countPercentage(countTaskDone, thisTodo.tasks.length)}%
-								progress
+							{isAllTasksDone ? (
+								<p className="flex items-center gap-2 text-sm text-green-400">
+									fully completed! <BiCheckCircle className="text-xl" />
+								</p>
+							) : (
+								<p className="flex items-center text-sm font-semibold">
+									{countTaskDone < 1
+										? "0"
+										: countPercentage(countTaskDone, thisTodo.tasks.length)}
+									% progress
+								</p>
+							)}
+						</div>
+						<div className="pl-4 font-light border-l">
+							<p>{day},</p>
+							<p className="text-sm">
+								{thisTodo.date.getDate()} {month}
 							</p>
-						)}
+						</div>
 					</div>
-					<div className="font-light">
-						<p>{day},</p>
-						<p className="text-sm">
-							{thisTodo.date.getDate()} {month}
+
+					<button
+						onClick={toggleAllTaskDone}
+						className={`px-1 flex flex-col items-center justify-around w-1/5 text-xs  rounded-md ${
+							isAllTasksDone
+								? "text-gray-600 bg-gray-300"
+								: "text-white bg-green-400"
+						}`}
+					>
+						<PiListChecks className="text-4xl " />
+						<p className="">
+							mark all tasks as{" "}
+							<span className="font-semibold tracking-wide">
+								{isAllTasksDone ? "not done" : "done"}
+							</span>
 						</p>
-					</div>
+					</button>
 				</div>
 				<form className="flex h-12 gap-2 p-2 text-sm text-gray-400 bg-gray-100 rounded-lg">
 					<input
