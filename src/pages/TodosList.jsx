@@ -49,7 +49,7 @@ const TodosList = ({ children }) => {
 			</div>
 
 			{todos.length > 0 ? (
-				<div className="grid w-full grid-cols-2 gap-4 mt-4 ">{children}</div>
+				<div className="grid w-full grid-cols-2 gap-2 mt-4 ">{children}</div>
 			) : (
 				<div className="my-20 text-sm text-center text-gray-400">
 					<p>you have no todos yet . .</p>
