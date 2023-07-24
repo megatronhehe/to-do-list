@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { TodosContext } from "../context/TodosContext";
+import { NotifContext } from "../context/NotifContext";
 
 import { stringifyDate } from "../utils/stringfyDate";
 
@@ -10,6 +11,7 @@ import { BiCheckCircle } from "react-icons/bi";
 
 const TodoCard = ({ id, title, tasks, date }) => {
 	const { deleteTodo, editTodoName } = useContext(TodosContext);
+	const { setNotif } = useContext(NotifContext);
 
 	const [toggleEdit, setToggleEdit] = useState(false);
 	const inputRef = useRef(null);
@@ -71,7 +73,10 @@ const TodoCard = ({ id, title, tasks, date }) => {
 
 			{!toggleEdit && (
 				<button
-					onClick={(e) => deleteTodo(id, e)}
+					onClick={(e) => {
+						deleteTodo(id, e);
+						setNotif("todo successfully deleted");
+					}}
 					className="absolute p-2 text-xl text-white bg-red-300 rounded-md top-1 right-1"
 				>
 					<TfiTrash />

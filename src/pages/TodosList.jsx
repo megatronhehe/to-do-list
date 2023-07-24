@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
+
 import { TodosContext } from "../context/TodosContext";
+import { NotifContext } from "../context/NotifContext";
+
+import { isFormEmpty } from "../utils/isFormEmpty";
 
 import { HiPlus } from "react-icons/hi";
 
-const TodosList = ({ children, setNotif }) => {
+const TodosList = ({ children }) => {
 	const { todos, handleCreateTodo, addNewTodo, newTodoForm } =
 		useContext(TodosContext);
-
-	const isFormEmpty = newTodoForm.title ? false : true;
+	const { setNotif } = useContext(NotifContext);
 
 	return (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
@@ -30,11 +33,11 @@ const TodosList = ({ children, setNotif }) => {
 
 					<button
 						onClick={
-							!isFormEmpty
+							!isFormEmpty(newTodoForm.title)
 								? addNewTodo
 								: (e) => {
 										e.preventDefault();
-										setNotif("form cannot be empty!");
+										setNotif("todos form cannot be empty!");
 								  }
 						}
 						// disabled={!newTodoForm.title}

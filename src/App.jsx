@@ -10,21 +10,23 @@ import TodoDetails from "./pages/TodoDetails";
 import TodosList from "./pages/TodosList";
 
 import { TodosContext } from "./context/TodosContext";
+import { NotifContext } from "./context/NotifContext";
 
 function App() {
-	const [showNotif, setShowNotif] = useState(false);
-	const [notifMessage, setNotifMessage] = useState("");
+	// const [showNotif, setShowNotif] = useState(false);
+	// const [notifMessage, setNotifMessage] = useState("");
 
 	const { todos } = useContext(TodosContext);
+	const { setNotif, showNotif } = useContext(NotifContext);
 
-	const setNotif = (message) => {
-		setShowNotif(true);
-		setNotifMessage(message);
-		setTimeout(() => {
-			setShowNotif(false);
-			setNotifMessage("");
-		}, 3000);
-	};
+	// const setNotif = (message) => {
+	// 	setShowNotif(true);
+	// 	setNotifMessage(message);
+	// 	setTimeout(() => {
+	// 		setShowNotif(false);
+	// 		setNotifMessage("");
+	// 	}, 3000);
+	// };
 
 	// ELEMENT
 	const TodosCardElement = todos.map((todo) => (
@@ -45,9 +47,7 @@ function App() {
 					<Route
 						path="/"
 						element={
-							<TodosList setNotif={setNotif}>
-								{todos.length > 0 && TodosCardElement}
-							</TodosList>
+							<TodosList>{todos.length > 0 && TodosCardElement}</TodosList>
 						}
 					></Route>
 					<Route
@@ -56,7 +56,7 @@ function App() {
 					></Route>
 				</Routes>
 
-				{showNotif ? <Notification notifMessage={notifMessage} /> : ""}
+				{showNotif ? <Notification /> : ""}
 			</Container>
 		</>
 	);

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import { TodosContext } from "../context/TodosContext";
+import { NotifContext } from "../context/NotifContext";
 
 import Task from "../components/Task";
 
@@ -10,14 +11,17 @@ import ErrorPage from "./ErrorPage";
 import { stringifyDate } from "../utils/stringfyDate";
 import { createId } from "../utils/createId";
 import { countPercentage } from "../utils/countPercentage";
+import { isFormEmpty } from "../utils/isFormEmpty";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
 import { BiCheckCircle, BiTask, BiCheck, BiX } from "react-icons/bi";
 
-const TodoDetails = ({ setNotif }) => {
+const TodoDetails = () => {
 	const { todos, setTodos, editTodoName } = useContext(TodosContext);
+	const { setNotif } = useContext(NotifContext);
+
 	// initialization
 	const inputRef = useRef(null);
 	const { id } = useParams();
@@ -99,8 +103,6 @@ const TodoDetails = ({ setNotif }) => {
 
 	const isAllTasksDone =
 		thisTodo.tasks.length > 0 && countTaskDone / thisTodo.tasks.length === 1;
-
-	const isFormEmpty = taskForm.name ? false : true;
 
 	return isTodosExist ? (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
@@ -191,11 +193,11 @@ const TodoDetails = ({ setNotif }) => {
 
 					<button
 						onClick={
-							!isFormEmpty
+							!isFormEmpty(taskForm.name)
 								? addTask
 								: (e) => {
 										e.preventDefault();
-										setNotif("task form cannot be empty");
+										setNotif("task form cannot be empty!");
 								  }
 						}
 						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full cursor-pointer"
