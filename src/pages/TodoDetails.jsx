@@ -16,7 +16,7 @@ import { TfiPencilAlt, TfiCheck } from "react-icons/tfi";
 import { HiPlus } from "react-icons/hi";
 import { BiCheckCircle, BiTask, BiCheck, BiX } from "react-icons/bi";
 
-const TodoDetails = () => {
+const TodoDetails = ({ setNotif }) => {
 	const { todos, setTodos, editTodoName } = useContext(TodosContext);
 	// initialization
 	const inputRef = useRef(null);
@@ -99,6 +99,8 @@ const TodoDetails = () => {
 
 	const isAllTasksDone =
 		thisTodo.tasks.length > 0 && countTaskDone / thisTodo.tasks.length === 1;
+
+	const isFormEmpty = taskForm.name ? false : true;
 
 	return isTodosExist ? (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
@@ -188,8 +190,14 @@ const TodoDetails = () => {
 					/>
 
 					<button
-						disabled={!taskForm.name}
-						onClick={addTask}
+						onClick={
+							!isFormEmpty
+								? addTask
+								: (e) => {
+										e.preventDefault();
+										setNotif("task form cannot be empty");
+								  }
+						}
 						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full cursor-pointer"
 					>
 						<HiPlus />

@@ -3,9 +3,11 @@ import { TodosContext } from "../context/TodosContext";
 
 import { HiPlus } from "react-icons/hi";
 
-const TodosList = ({ children }) => {
+const TodosList = ({ children, setNotif }) => {
 	const { todos, handleCreateTodo, addNewTodo, newTodoForm } =
 		useContext(TodosContext);
+
+	const isFormEmpty = newTodoForm.title ? false : true;
 
 	return (
 		<div className="relative w-full p-4 mt-8 bg-white rounded-xl ">
@@ -27,8 +29,15 @@ const TodosList = ({ children }) => {
 					/>
 
 					<button
-						onClick={addNewTodo}
-						disabled={!newTodoForm.title}
+						onClick={
+							!isFormEmpty
+								? addNewTodo
+								: (e) => {
+										e.preventDefault();
+										setNotif("form cannot be empty!");
+								  }
+						}
+						// disabled={!newTodoForm.title}
 						className="flex items-center justify-center w-1/6 text-white bg-green-300 rounded-full"
 					>
 						<HiPlus />
